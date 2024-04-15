@@ -1,0 +1,56 @@
+<%- include('partials/header'); -%>
+
+<main id="box">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <div class="date">
+        <h1><%= date %></h1>
+    </div>
+    <div class="list" style="max-height: 700px; overflow-y: auto; overflow-x: hidden;">
+        <% newItem.forEach((item) => { %>
+            <div class="item-container">
+                <div class="item">
+                    <form action="/update/<%= item._id %>" method="post" class="item-update-form">
+                        <input type="hidden" name="itemId" value="<%= item._id %>">
+                        <textarea name="updatedItem" placeholder="Add your notes here..." style="color: #000000; font-size: 14px; font-weight: normal; font-style: italic; opacity: 1; background-color: aliceblue; border: 2px solid #343148FF" rows="4" autocomplete="off"><%= item.item %></textarea>
+                        <button class="btn12" style="position: relative; top: 5px; right: -100px;"  auto; display: block;" type="submit" onclick="showPopup('Task Updated!', 'add-popup')">Edit</button>
+                        <div id="add-popup" class="popup">Task Updated!</div>
+                    </form>
+
+                    <form action="/delete" method="post" class="item-delete-form">
+                        <div class="item">
+                            <input style="position: relative; top: -55px; right: 20px;" type="checkbox"  name="delete" value="<%= item._id %>">
+                            <button class="btn"  style="position: relative; top: -16px; right: 89px;" type="submit" onclick="showPopup('Task Deleted!', 'add-popup')">Del</button>
+                            <div id="add-popup" class="popup">Task Deleted!</div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        <% }) %>
+        <form class="form" action="/list" method="post">
+            <textarea name="item" placeholder="Add your notes here..." style="color: #000000; font-size: 14px; font-weight: normal; font-style: italic; opacity: 1; background-color: aliceblue; border: 2px solid #343148FF" rows="4"></textarea>
+            <button class="btn123" type="submit" onclick="showPopup('Task added!', 'add-popup')">+</button>
+            <div id="add-popup" class="popup">Task added!</div>
+        </form>
+    </div>
+    <div class="love">
+        <p><h1>Made with ❤️ DESIRE PROGRAMMING.<h1></p>
+    </div>
+    <div class="logout">
+        <button class="btnnn1"> <a href="/logout">Logout</a></button>
+    </div>
+</main>
+
+<%- include('partials/footer'); -%>
+
+<script>
+    function showPopup(message, popupId) {
+        var popup = document.getElementById(popupId);
+        popup.textContent = message;
+        popup.style.display = "block";
+
+        // Hide the pop-up message after 10 seconds
+        setTimeout(function() {
+            popup.style.display = "none";
+        }, 10000000);
+    }
+</script>
