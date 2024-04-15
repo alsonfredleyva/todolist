@@ -65,21 +65,32 @@ app.get("/signup", (req, res) => {
     res.render("signup");
 });
 
+
 app.post("/signup", (req, res) => {
+    // Check if both email and password fields are provided
+    if (!req.body.email || !req.body.password) {
+        return res.status(400).send("Email and password are required.");
+    }
 
     bcrypt.hash(req.body.password, saltRounds, async function(err, hash) {
+        if (err) {
+            console.error("Error hashing password:", err);
+            return res.status(500).send("Internal Server Error");
+        }
                
         let newUser = new Mymodel2({
             email: req.body.email,
             password: hash
         });
     
-        await newUser.save();
-    
-        res.redirect("/list");
-
+        try {
+            await newUser.save();
+            res.redirect("/list");
+        } catch (error) {
+            console.error("Error saving user:", error);
+            res.status(500).send("Internal Server Error");
+        }
     });
-    
 });
 
 app.post("/signin", async (req, res) => {
