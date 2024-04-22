@@ -11,13 +11,13 @@
                 <div class="item">
                     <form action="/update/<%= item._id %>" method="post" class="item-update-form">
                         <input type="hidden" name="itemId" value="<%= item._id %>">
-                        <textarea name="updatedItem" placeholder="Add your notes here..." style="color: #000000; font-size: 14px; font-weight: normal; font-style: italic; opacity: 1; background-color: aliceblue; border: 2px solid #343148FF" rows="4" autocomplete="off" readonly><%= item.item %></textarea>
+                        <textarea name="updatedItem" placeholder="Add your notes here..." style="color: #000000; font-size: 14px; font-weight: normal; font-style: italic; opacity: 1; background-color: aliceblue; border: 2px solid #343148FF" rows="3" autocomplete="off" readonly><%= item.item %></textarea>
                     </form>
 
                     <form action="/delete" method="post" class="item-delete-form">
                         <div class="item">
                             <input type="hidden"  name="delete" value="<%= item._id %>">
-                            <button class="btn"  style="position: relative; top: -16px; right: 89px;" type="submit" onclick="showPopup('Task Deleted!', 'add-popup')">Del</button>
+                            <button class="btn"  style="position: relative; top: -3px; right: 35px;" type="submit" onclick="showPopup('Task Deleted!', 'add-popup')">-</button>
                             <div id="add-popup" class="popup">Task Deleted!</div>
                         </div>
                     </form>
