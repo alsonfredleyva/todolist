@@ -97,21 +97,31 @@ app.post("/signin", async (req, res) => {
     const checkEmail = req.body.email;
     const checkPassword = req.body.password;
 
-    try {
-        const foundNewUser = await Mymodel2.findOne({email: checkEmail});
-    
-        bcrypt.compare(checkPassword, foundNewUser.password, function(err, result) {
-            if(result === true) {
+    // Check if email or password is missing
+    if (!checkEmail || !checkPassword) {
+        return res.status(400).send("Email and password are required.");
+    }
 
+    try {
+        const foundNewUser = await Mymodel2.findOne({ email: checkEmail });
+
+        // Check if user with the provided email exists
+        if (!foundNewUser) {
+            return res.status(404).send("User not found.");
+        }
+
+        bcrypt.compare(checkPassword, foundNewUser.password, function(err, result) {
+            if (result === true) {
                 res.redirect("/list");
             } else {
-                res.redirect("/signin");
+                res.status(401).send("Incorrect password.");
             }
         });
 
     } catch (error) {
         console.log("error is :" + error);
-    }  
+        res.status(500).send("Internal server error.");
+    }
 });
 
 
