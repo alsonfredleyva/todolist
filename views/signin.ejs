@@ -24,3 +24,30 @@
     </div>
 
     <%- include('partials/footer'); -%>
+
+<script>
+    function showPopup(message, popupId) {
+        var popup = document.getElementById(popupId);
+        popup.textContent = message;
+        popup.style.display = "block";
+
+        // Hide the pop-up message after 3 seconds
+        setTimeout(function() {
+            popup.style.display = "none";
+        }, 3000); // Adjust the duration as needed
+    }
+
+    function validateForm() {
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+
+        if (!email || !password) {
+            alert("Email and password are required.");
+            return false;
+        }
+
+        // If the form is valid, display the popup message
+        showPopup('Logging in...', 'login-popup');
+        return true;
+    }
+</script>
